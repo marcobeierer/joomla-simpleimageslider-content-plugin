@@ -43,7 +43,8 @@ function loadPhoto(mode, currentPhoto, firstCall) {
     jQuery.ajax({
         dataType: 'json',
         type: 'GET',
-        url: jQuery('#sis_basepath').val() + 'plugins/content/simpleimageslider/photo.php',
+        //url: jQuery('#sis_basepath').val() + 'plugins/content/simpleimageslider/photo.php',
+        url: jQuery('#sis_basepath').val() + 'index.php?option=com_ajax&plugin=simpleimageslider&format=raw',
         data: {width: width, height: height, mode: mode, currentPhoto: currentPhoto, directory: directory}
 
     }).done(function(data) {
