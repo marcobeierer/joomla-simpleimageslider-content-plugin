@@ -117,7 +117,9 @@ function toggleSlideshow() {
     }
 }
 
-function startSlideshow(loopMode) {
+function startSlideshow(loopModeParam) {
+
+	loopMode = loopModeParam;
 
     if (!lastPhoto) {
         slideshowTimer = setInterval('loadNextPhoto()', 5000);
