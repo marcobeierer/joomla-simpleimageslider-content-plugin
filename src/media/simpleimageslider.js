@@ -34,8 +34,8 @@ function loadPhoto(mode, currentPhoto, firstCall) {
     currentPhoto = currentPhoto || null;
     firstCall = firstCall || false;
 
-    var width = jQuery('#simpleimageslider').width();
-    var height = jQuery('#simpleimageslider').height();
+    var width = jQuery('#sis_photo-frame').width();
+    var height = jQuery('#sis_photo-frame').height();
 
     jQuery('#sis_arrow-left').css('display', 'none');
     jQuery('#sis_arrow-right').css('display', 'none');
