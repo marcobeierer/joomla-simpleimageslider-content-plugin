@@ -66,7 +66,12 @@ function loadPhoto(mode, currentPhoto, firstCall) {
         lastPhoto = data.isLast;
 
         if (data.isLast && slideshowTimer) {
-            stopSlideshow();
+
+			if (loopMode) {
+				loadFirstPhoto();
+			} else {
+				stopSlideshow();
+			}
         }
 
         jQuery('#sis_photo-position').text(data.currentPhotoPosition);
@@ -102,16 +107,18 @@ function loadPhoto(mode, currentPhoto, firstCall) {
 var slideshowTimer;
 var firstPhoto = false;
 var lastPhoto = false;
+var loopMode = false;
 
 function toggleSlideshow() {
     if (slideshowTimer) {
         stopSlideshow();
     } else {
-        startSlideshow();
+        startSlideshow(false);
     }
 }
 
-function startSlideshow() {
+function startSlideshow(loopMode) {
+
     if (!lastPhoto) {
         slideshowTimer = setInterval('loadNextPhoto()', 5000);
 
