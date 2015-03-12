@@ -10,13 +10,18 @@ class plgContentSimpleimageslider extends JPlugin {
 
 	public function onContentPrepare($context, &$article, &$params, $page) {
 
+		$pattern = '/\{simpleimageslider (.*)\}/';
+
+		if (preg_match($pattern, $article->text) !== 1) {
+			return;
+		}
+		
 		JHTML::_('bootstrap.framework'); // TODO necessary or is jQuery enough?
 
 		$doc = JFactory::getDocument();
 		$doc->addScript('media/plg_content_simpleimageslider/simpleimageslider.js');
 		$doc->addStyleSheet('media/plg_content_simpleimageslider/simpleimageslider.css');
 
-		$pattern = '/\{simpleimageslider (.*)\}/';
 
 		$path = JPluginHelper::getLayoutPath('content', 'simpleimageslider');
 		$replacement = file_get_contents($path);
