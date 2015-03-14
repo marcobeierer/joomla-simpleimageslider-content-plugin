@@ -181,8 +181,10 @@ function setCaption(photoOriginalPath) { // TODO rename to updateCaption?
 		var caption = jQuery('#sis_photo-caption');
 		if (filename != undefined && data[filename] != undefined) { // TODO does data.filename work?
 			caption.text(data[filename]);
+    		caption.css('display', '');
 		} else {
 			caption.text('');
+    		caption.css('display', 'none');
 		}
 	});
 }
