@@ -90,16 +90,9 @@ function loadPhoto(mode, currentPhoto, firstCall) {
             }
             photo.css('margin-top', marginTop + 'px');
 
-            /*if (height == data.photoHeight) {
-                photo.css('border-width', '0 3px');
-            } else {
-                photo.css('border-width', '3px 0');
-            }
-            photo.css('border-style', 'solid');
-            photo.css('border-color', '#FFFFFF');*/
-
             photo.load(function() {
                 photo.fadeIn(1000);
+				setCaption(data.photoOriginalPath);
             });
 
         })
@@ -173,4 +166,23 @@ function setDirectory(directory) {
         category.text(directory);
     }
     loadFirstPhoto(false);
+}
+
+function setCaption(photoOriginalPath) { // TODO rename to updateCaption?
+
+	var directory = jQuery('#sis_directory').val();
+	jQuery.getJSON('images/' + directory + '/data.json', function(data) {
+
+		var lastIndex = photoOriginalPath.lastIndexOf('/');
+		if (lastIndex >= 0) {
+			var filename = photoOriginalPath.substring(lastIndex + 1, photoOriginalPath.length);
+		}
+
+		var caption = jQuery('#sis_photo-caption');
+		if (filename != undefined && data[filename] != undefined) { // TODO does data.filename work?
+			caption.text(data[filename]);
+		} else {
+			caption.text('');
+		}
+	});
 }

@@ -11,6 +11,9 @@ defined('_JEXEC') or die();
 	<div id="sis_photo-frame">
 		<img id="sis_photo" alt="SIS_LOADING" src="">
 	</div>
+	
+	<div id="sis_photo-caption">
+	</div>
 
 	<div id="sis_control">
 		<div class="pull-left control-left">
