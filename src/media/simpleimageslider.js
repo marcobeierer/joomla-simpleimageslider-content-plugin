@@ -95,10 +95,10 @@ function loadPhoto(mode, currentPhoto, firstCall) {
         jQuery('#sis_photo-position').text(data.currentPhotoPosition);
         jQuery('#sis_number-of-photos').text(data.numberOfPhotos);
 
-		var softTransition = photo.width() == data.photoWidth && photo.height() == data.photoHeight;
+		var smoothTransition = photo.width() == data.photoWidth && photo.height() == data.photoHeight;
 
 		photoFrame = jQuery('#sis_photo-frame');
-		if (softTransition) {
+		if (smoothTransition) {
 			photoFrame.css('background-image', "url('" + photo.attr('src') + "')");
 		}
 
@@ -117,7 +117,7 @@ function loadPhoto(mode, currentPhoto, firstCall) {
 
 			photo.fadeIn(fadeDuration, function() {
 
-				if (softTransition) {
+				if (smoothTransition) {
 					photoFrame.css('background-image', 'none');
 				}
 			});
