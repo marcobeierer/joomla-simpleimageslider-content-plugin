@@ -1,5 +1,6 @@
 jQuery(document).ready(function() {
 	setDirectory(jQuery('#sis_directory').val());
+	loadData();
 	//loadFirstPhoto(true); // done in set directory
 });
 
@@ -150,28 +151,23 @@ function stopSlideshow() {
 var directory = '';
 
 function setDirectory(directory) {
+
     this.directory = directory;
-
-    var category = jQuery('#sis_category');
-    var categoryButton = jQuery('#sis_category-button');
-
-    if (directory == '') {
-        category.text('All Photos');
-    } else {
-		var lastIndex = directory.lastIndexOf('/');
-
-		if (lastIndex >= 0) {
-			directory = directory.substring(lastIndex + 1, directory.length);
-		}
-        category.text(directory);
-    }
     loadFirstPhoto(false);
+}
+
+var data;
+
+function loadData() {
+
+	jQuery.getJSON('images/' + directory + '/data.json', function(data) {
+		parent.data = data;
+	});
 }
 
 function setCaption(photoOriginalPath) { // TODO rename to updateCaption?
 
-	var directory = jQuery('#sis_directory').val();
-	jQuery.getJSON('images/' + directory + '/data.json', function(data) {
+	if (this.data != undefined && this.data != null) {
 
 		var lastIndex = photoOriginalPath.lastIndexOf('/');
 		if (lastIndex >= 0) {
@@ -179,12 +175,13 @@ function setCaption(photoOriginalPath) { // TODO rename to updateCaption?
 		}
 
 		var caption = jQuery('#sis_photo-caption');
-		if (filename != undefined && data[filename] != undefined) { // TODO does data.filename work?
-			caption.text(data[filename]);
+		if (filename != undefined && this.data[filename] != undefined) { // TODO does data.filename work?
+			caption.text(this.data[filename]);
     		caption.css('display', '');
 		} else {
 			caption.text('');
     		caption.css('display', 'none');
 		}
-	});
+
+	}
 }
