@@ -17,6 +17,9 @@
 	position: relative;
 	width: 100%;
 	text-align: center;
+
+	background-repeat: no-repeat;
+	background-position: center center;
 }
 
 #sis_photo-frame:before {

@@ -1,12 +1,29 @@
 jQuery(document).ready(function() {
+
 	setDirectory(jQuery('#sis_directory').val());
 	loadData();
-	//loadFirstPhoto(true); // done in set directory
+	loadFirstPhoto(true);
 });
+
+var directory = '';
+var data;
+
+function setDirectory(directory) {
+    this.directory = directory;
+}
+
+
+function loadData() {
+
+	jQuery.getJSON('images/' + directory + '/data.json', function(data) {
+		parent.data = data;
+	});
+}
+
 
 function loadPreviousPhoto() {
     var currentPhoto = jQuery('#sis_photo').attr('alt');
-    loadPhoto('previous', currentPhoto);
+    loadPhoto('previous', currentPhoto, false);
 }
 
 function loadNextPhoto() {
@@ -16,21 +33,18 @@ function loadNextPhoto() {
 	}
 
     var currentPhoto = jQuery('#sis_photo').attr('alt');
-    loadPhoto('next', currentPhoto);
+    loadPhoto('next', currentPhoto, false);
 }
 
 function loadRandomPhoto(firstCall) {
-    firstCall = firstCall || false;
     loadPhoto('random', null, firstCall);
 }
 
 function loadFirstPhoto(firstCall) {
-    firstCall = firstCall || false;
     loadPhoto('first', null, firstCall);
 }
 
 function loadLastPhoto(firstCall) {
-    firstCall = firstCall || false;
     loadPhoto('last', null, firstCall);
 }
 
@@ -38,8 +52,8 @@ function loadPhoto(mode, currentPhoto, firstCall) {
 
     mode = mode || 'random';
     currentPhoto = currentPhoto || null;
-    firstCall = firstCall || false;
-
+	firstCall = firstCall || false;
+	
     var width = jQuery('#sis_photo-frame').width();
     var height = jQuery('#sis_photo-frame').height();
 
@@ -55,9 +69,10 @@ function loadPhoto(mode, currentPhoto, firstCall) {
     }).done(function(data) {
 
         var photo = jQuery('#sis_photo');
-        var fadeOutTime = 1000;
+
+        var fadeDuration = 1000;
         if (firstCall) {
-            fadeOutTime = 0;
+            fadeDuration = 0;
         }
 
         if (!data.isFirst && !slideshowTimer) {
@@ -80,22 +95,32 @@ function loadPhoto(mode, currentPhoto, firstCall) {
         jQuery('#sis_photo-position').text(data.currentPhotoPosition);
         jQuery('#sis_number-of-photos').text(data.numberOfPhotos);
 
-        photo.fadeOut(fadeOutTime, function() {
+		var softTransition = photo.width() == data.photoWidth && photo.height() == data.photoHeight;
+
+		photoFrame = jQuery('#sis_photo-frame');
+		if (softTransition) {
+			photoFrame.css('background-image', "url('" + photo.attr('src') + "')");
+		}
+
+        photo.fadeOut(fadeDuration, function() {
 
             photo.attr('src', jQuery('#sis_basepath').val() + data.photoPath);
             photo.attr('alt', data.photoOriginalPath);
 
             var marginTop = 0
             if (height != data.photoHeight) {
-                marginTop = (height - data.photoHeight - 6)/2;
+                marginTop = (height - data.photoHeight)/2;
             }
             photo.css('margin-top', marginTop + 'px');
 
-            photo.load(function() {
-                photo.fadeIn(1000);
-				setCaption(data.photoOriginalPath);
-            });
+			setCaption(data.photoOriginalPath);
 
+			photo.fadeIn(fadeDuration, function() {
+
+				if (softTransition) {
+					photoFrame.css('background-image', 'none');
+				}
+			});
         })
     })
 }
@@ -146,23 +171,6 @@ function stopSlideshow() {
     if (!lastPhoto) {
         jQuery('#sis_arrow-right').css('display', '');
     }
-}
-
-var directory = '';
-
-function setDirectory(directory) {
-
-    this.directory = directory;
-    loadFirstPhoto(false);
-}
-
-var data;
-
-function loadData() {
-
-	jQuery.getJSON('images/' + directory + '/data.json', function(data) {
-		parent.data = data;
-	});
 }
 
 function setCaption(photoOriginalPath) { // TODO rename to updateCaption?
