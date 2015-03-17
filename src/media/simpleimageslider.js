@@ -95,7 +95,8 @@ function loadPhoto(mode, currentPhoto, firstCall) {
         jQuery('#sis_photo-position').text(data.currentPhotoPosition);
         jQuery('#sis_number-of-photos').text(data.numberOfPhotos);
 
-		var smoothTransition = photo.width() == data.photoWidth && photo.height() == data.photoHeight;
+		//var smoothTransition = photo.width() == data.photoWidth && photo.height() == data.photoHeight;
+		var smoothTransition = (photo.width() / photo.height()) == (data.photoWidth / data.photoHeight);
 
 		photoFrame = jQuery('#sis_photo-frame');
 		if (smoothTransition) {
