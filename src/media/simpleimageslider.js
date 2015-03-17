@@ -115,12 +115,15 @@ function loadPhoto(mode, currentPhoto, firstCall) {
 
 			setCaption(data.photoOriginalPath);
 
-			photo.fadeIn(fadeDuration, function() {
+			photo.on('load', function(fadeDuration, smoothTransition, photoFrame) {
 
-				if (smoothTransition) {
-					photoFrame.css('background-image', 'none');
-				}
-			});
+				photo.stop().fadeIn(fadeDuration, function() {
+
+					if (smoothTransition) {
+						photoFrame.css('background-image', 'none');
+					}
+				});
+			}(fadeDuration, smoothTransition, photoFrame));
         })
     })
 }
