@@ -15,7 +15,7 @@ function setDirectory(directory) {
 
 function loadData() {
 
-	jQuery.getJSON('images/' + directory + '/data.json', function(data) {
+	jQuery.getJSON(jQuery('#sis_basepath').val() + 'images/' + directory + '/data.json', function(data) {
 		parent.data = data;
 	});
 }
