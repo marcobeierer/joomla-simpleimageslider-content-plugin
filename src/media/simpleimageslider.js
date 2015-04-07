@@ -48,6 +48,15 @@ function loadLastPhoto(firstCall) {
     loadPhoto('last', null, firstCall);
 }
 
+function loadCurrentPhoto(firstCall) {
+    var currentPhoto = jQuery('#sis_photo').attr('alt');
+	loadPhoto('current', currentPhoto, firstCall);
+}
+
+function loadPhotoByPath(path, firstCall) {
+	loadPhoto('current', path, firstCall);
+}
+
 function loadPhoto(mode, currentPhoto, firstCall) {
 
     mode = mode || 'random';
