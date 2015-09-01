@@ -5,7 +5,6 @@
  */
 
 defined('_JEXEC') or die();
-
 ?>
 <div id="simpleimageslider" class="simpleimageslider">
 	<div id="sis_photo-frame">
@@ -13,6 +12,7 @@ defined('_JEXEC') or die();
 	</div>
 	
 	<div id="sis_photo-caption">
+		SIS_CAPTION
 	</div>
 
 	<div id="sis_control">

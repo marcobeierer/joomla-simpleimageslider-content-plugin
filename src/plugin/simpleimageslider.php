@@ -32,6 +32,7 @@ class plgContentSimpleimageslider extends JPlugin {
 		$replacement = preg_replace('/SIS_LOADING/', JText::_('PLG_CONTENT_SIMPLEIMAGESLIDER_LOADING'), $replacement);
 		$replacement = preg_replace('/SIS_IMAGE/', JText::_('PLG_CONTENT_SIMPLEIMAGESLIDER_IMAGE'), $replacement);
 		$replacement = preg_replace('/SIS_OF/', JText::_('PLG_CONTENT_SIMPLEIMAGESLIDER_OF'), $replacement);
+		$replacement = preg_replace('/SIS_CAPTION/', JText::_('PLG_CONTENT_SIMPLEIMAGESLIDER_CAPTION'), $replacement);
 
 		$replacement = preg_replace('/SIS_BASEPATH/', JURI::base(), $replacement);
 
