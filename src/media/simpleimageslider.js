@@ -1,5 +1,4 @@
 jQuery(document).ready(function() {
-
 	setDirectory(jQuery('#sis_directory').val());
 	loadData();
 	loadFirstPhoto(true);
@@ -12,9 +11,7 @@ function setDirectory(directory) {
     this.directory = directory;
 }
 
-
 function loadData() {
-
 	jQuery.getJSON(jQuery('#sis_basepath').val() + 'images/' + directory + '/data.json', function(data) {
 		parent.data = data;
 	});
@@ -27,7 +24,6 @@ function loadPreviousPhoto() {
 }
 
 function loadNextPhoto() {
-
 	if (lastPhoto && loopMode) {
 		return loadFirstPhoto(false);
 	}
@@ -58,7 +54,6 @@ function loadPhotoByPath(path, firstCall) {
 }
 
 function loadPhoto(mode, currentPhoto, firstCall) {
-
     mode = mode || 'random';
     currentPhoto = currentPhoto || null;
 	firstCall = firstCall || false;
@@ -76,7 +71,6 @@ function loadPhoto(mode, currentPhoto, firstCall) {
         data: {width: width, height: height, mode: mode, currentPhoto: currentPhoto, directory: directory}
 
     }).done(function(data) {
-
         var photo = jQuery('#sis_photo');
 
         var fadeDuration = 1000;
@@ -113,7 +107,6 @@ function loadPhoto(mode, currentPhoto, firstCall) {
 		}
 
         photo.fadeOut(fadeDuration, function() {
-
             photo.attr('src', jQuery('#sis_basepath').val() + data.photoPath);
             photo.attr('alt', data.photoOriginalPath);
 
@@ -126,9 +119,7 @@ function loadPhoto(mode, currentPhoto, firstCall) {
 			setCaption(data.photoOriginalPath);
 
 			photo.on('load', function(fadeDuration, smoothTransition, photoFrame) {
-
 				photo.stop().fadeIn(fadeDuration, function() {
-
 					if (smoothTransition) {
 						photoFrame.css('background-image', 'none');
 					}
@@ -152,7 +143,6 @@ function toggleSlideshow() {
 }
 
 function startSlideshow(loopModeParam) {
-
 	loopMode = loopModeParam;
 
     if (!lastPhoto) {
@@ -187,9 +177,7 @@ function stopSlideshow() {
 }
 
 function setCaption(photoOriginalPath) { // TODO rename to updateCaption?
-
 	if (this.data != undefined && this.data != null) {
-
 		var lastIndex = photoOriginalPath.lastIndexOf('/');
 		if (lastIndex >= 0) {
 			var filename = photoOriginalPath.substring(lastIndex + 1, photoOriginalPath.length);
@@ -203,6 +191,5 @@ function setCaption(photoOriginalPath) { // TODO rename to updateCaption?
 			caption.text('');
     		caption.css('display', 'none');
 		}
-
 	}
 }
